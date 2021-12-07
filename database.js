@@ -29,6 +29,22 @@ export const Contact = database.define('contact', {
     }
 });
 
+export const Friendship = database.define('friendship', {
+    contactId: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        primaryKey: true,
+    },
+    friendId: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    notified: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+    }
+});
+
 try {
     // ensures that the database is created and is in sync with the defined model
     await database.sync();
