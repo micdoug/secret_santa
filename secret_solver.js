@@ -1,5 +1,5 @@
 import { Contact, Friendship, database } from "./database.js";
-// import { client } from "./whatsapp_client.js";
+import { client } from "./whatsapp_client.js";
 
 const kStateRegistered = 3; // In this state the contact is considered registered with confirmed name.
 
@@ -106,9 +106,8 @@ async function notifyFriendshipByWhatsApp() {
             continue;
         }
         console.log(`Sending notification to ${contact.name}`);
-        // const whatsappId = getWhatsappId(contact);
-        // await client.sendText(whatsappId, `Olá ${contact.name}! O sorteio do amigo oculto foi realizado. Você saiu com ${friend.name}.`);
-        // console.log(`Olá ${contact.name}! O sorteio do amigo oculto foi realizado. Você saiu com *${friend.name}*.`);
+        const whatsappId = getWhatsappId(contact);
+        await client.sendText(whatsappId, `Olá ${contact.name}! O sorteio do amigo oculto foi realizado. Você saiu com *${friend.name}*.`);
         friendship.notified = true;
         await friendship.save();
     }
@@ -119,3 +118,4 @@ const friends = generateFriendsList(contacts);
 await persistFriendship(contacts, friends);
 await notifyFriendshipByWhatsApp();
 
+process.exit(0);
